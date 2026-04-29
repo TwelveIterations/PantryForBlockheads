@@ -4,13 +4,13 @@ import net.blay09.mods.pantryforblockheads.trade.ModVillagerTrades;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.tags.KeyTagProvider;
+import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.VillagerTradeTags;
 import net.minecraft.world.item.trading.VillagerTrade;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModVillagerTradeTagProvider extends KeyTagProvider<VillagerTrade> {
+public class ModVillagerTradeTagProvider extends TagsProvider<VillagerTrade> {
     public ModVillagerTradeTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, Registries.VILLAGER_TRADE, registriesFuture);
     }

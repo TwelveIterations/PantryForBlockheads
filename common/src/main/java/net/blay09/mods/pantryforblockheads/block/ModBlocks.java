@@ -9,6 +9,7 @@ import net.blay09.mods.pantryforblockheads.item.CropType;
 import net.blay09.mods.pantryforblockheads.item.TreeType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.SoundType;
@@ -26,8 +27,6 @@ public class ModBlocks {
     public final DiscriminatedBlocks<TreeType> leaves;
 
     public ModBlocks(BalmBlockRegistrar blocks) {
-        blocks.enableBlockDescriptionPrefixForItems();
-
         artisanPress = blocks.register("artisan_press", ArtisanPressBlock::new, it -> it
                         .strength(2.5f)
                         .requiresCorrectToolForDrops())
@@ -66,7 +65,7 @@ public class ModBlocks {
     }
 
     private boolean ocelotOrParrot(BlockState state, BlockGetter blockGetter, BlockPos blockPos, EntityType<?> entityType) {
-        return entityType == EntityType.OCELOT || entityType == EntityType.PARROT;
+        return entityType == EntityTypes.OCELOT || entityType == EntityTypes.PARROT;
     }
 
     private boolean never(BlockState state, BlockGetter blockGetter, BlockPos blockPos) {

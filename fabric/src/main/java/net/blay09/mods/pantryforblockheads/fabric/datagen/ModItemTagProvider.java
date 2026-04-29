@@ -10,10 +10,9 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.blay09.mods.pantryforblockheads.tag.ModItemTags;
-import net.minecraft.data.tags.TagAppender;
+import net.minecraft.references.BlockItemIds;
+import net.minecraft.references.ItemIds;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -26,65 +25,65 @@ public class ModItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
     protected void addTags(HolderLookup.Provider lookup) {
         final var blocks = PantryForBlockheads.blocks();
         final var items = PantryForBlockheads.items();
-        valueLookupBuilder(ModItemTags.ANY_EDIBLE_RAW_FISH)
-                .add(Items.COD)
-                .add(Items.SALMON)
-                .add(Items.TROPICAL_FISH);
-        valueLookupBuilder(ModItemTags.ANY_SUSHI_FILLING)
-                .add(items.meals.get(MealType.TOFU).asItem())
+        builder(ModItemTags.ANY_EDIBLE_RAW_FISH)
+                .add(ItemIds.COD)
+                .add(ItemIds.SALMON)
+                .add(ItemIds.TROPICAL_FISH);
+        builder(ModItemTags.ANY_SUSHI_FILLING)
+                .add(items.meals.get(MealType.TOFU).asResourceKey())
                 .addTag(ModItemTags.ANY_EDIBLE_RAW_FISH)
-                .add(Items.COOKED_CHICKEN);
-        valueLookupBuilder(ModItemTags.ANY_DUMPLING_FILLING)
-                .add(items.meals.get(MealType.TOFU).asItem())
-                .add(blocks.bushes.get(BushType.BLUEBERRIES).asItem())
+                .add(ItemIds.COOKED_CHICKEN);
+        builder(ModItemTags.ANY_DUMPLING_FILLING)
+                .add(items.meals.get(MealType.TOFU).asResourceKey())
+                .add(blocks.bushes.get(BushType.BLUEBERRIES).asBlockItemId())
                 .addOptionalTag(ItemTags.EGGS)
-                .add(Items.BEETROOT)
-                .add(Items.PORKCHOP)
-                .add(Items.CHICKEN)
-                .add(Items.BROWN_MUSHROOM)
-                .add(Items.RED_MUSHROOM)
-                .add(Items.BEEF)
+                .add(ItemIds.BEETROOT)
+                .add(ItemIds.PORKCHOP)
+                .add(ItemIds.CHICKEN)
+                .add(BlockItemIds.BROWN_MUSHROOM)
+                .add(BlockItemIds.RED_MUSHROOM)
+                .add(ItemIds.BEEF)
                 .addTag(ModItemTags.ANY_EDIBLE_RAW_FISH)
-                .add(Items.COOKED_CHICKEN);
-        valueLookupBuilder(ModItemTags.ANY_PIZZA_VEGETABLE)
-                .add(items.crops.get(CropType.BELL_PEPPER).asItem())
-                .add(items.crops.get(CropType.BROCCOLI).asItem())
-                .add(items.crops.get(CropType.CHILI_PEPPER).asItem())
-                .add(items.crops.get(CropType.ONION).asItem())
-                .add(items.crops.get(CropType.TOMATO).asItem())
-                .add(items.crops.get(CropType.EGGPLANT).asItem());
-        valueLookupBuilder(ModItemTags.ANY_BERRY)
-                .add(blocks.bushes.get(BushType.BLUEBERRIES).asItem())
-                .add(Items.SWEET_BERRIES);
-        valueLookupBuilder(ModItemTags.EXCESS_NUTRITION_GRANTS_ABSORPTION)
-                .add(items.meals.get(MealType.BURGER).asItem())
-                .add(items.meals.get(MealType.BURRITO).asItem())
-                .add(items.meals.get(MealType.CHEESE_PIZZA).asItem())
-                .add(items.meals.get(MealType.PEPPERONI_PIZZA).asItem())
-                .add(items.meals.get(MealType.VEGETABLE_PIZZA).asItem())
-                .add(items.meals.get(MealType.SANDWICH).asItem())
-                .add(items.meals.get(MealType.TACO).asItem());
+                .add(ItemIds.COOKED_CHICKEN);
+        builder(ModItemTags.ANY_PIZZA_VEGETABLE)
+                .add(items.crops.get(CropType.BELL_PEPPER).asResourceKey())
+                .add(items.crops.get(CropType.BROCCOLI).asResourceKey())
+                .add(items.crops.get(CropType.CHILI_PEPPER).asResourceKey())
+                .add(items.crops.get(CropType.ONION).asResourceKey())
+                .add(items.crops.get(CropType.TOMATO).asResourceKey())
+                .add(items.crops.get(CropType.EGGPLANT).asResourceKey());
+        builder(ModItemTags.ANY_BERRY)
+                .add(blocks.bushes.get(BushType.BLUEBERRIES).asBlockItemId())
+                .add(BlockItemIds.SWEET_BERRY_CROP);
+        builder(ModItemTags.EXCESS_NUTRITION_GRANTS_ABSORPTION)
+                .add(items.meals.get(MealType.BURGER).asResourceKey())
+                .add(items.meals.get(MealType.BURRITO).asResourceKey())
+                .add(items.meals.get(MealType.CHEESE_PIZZA).asResourceKey())
+                .add(items.meals.get(MealType.PEPPERONI_PIZZA).asResourceKey())
+                .add(items.meals.get(MealType.VEGETABLE_PIZZA).asResourceKey())
+                .add(items.meals.get(MealType.SANDWICH).asResourceKey())
+                .add(items.meals.get(MealType.TACO).asResourceKey());
 
-        final var chickenFood = valueLookupBuilder(ItemTags.CHICKEN_FOOD);
-        chickenFood.add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        blocks.crops.sortedValues().map(DeferredBlock::asItem).forEach(chickenFood::add);
-        final var parrotFood = valueLookupBuilder(ItemTags.PARROT_FOOD);
-        parrotFood.add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        blocks.crops.sortedValues().map(DeferredBlock::asItem).forEach(parrotFood::add);
-        valueLookupBuilder(ItemTags.PIG_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.SHEEP_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.COW_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.HORSE_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.GOAT_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.RABBIT_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.CAMEL_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.ARMADILLO_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.TURTLE_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
-        valueLookupBuilder(ItemTags.LLAMA_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
+        final var chickenFood = builder(ItemTags.CHICKEN_FOOD);
+        chickenFood.add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        blocks.crops.sortedValues().map(DeferredBlock::asBlockItemId).forEach(chickenFood::add);
+        final var parrotFood = builder(ItemTags.PARROT_FOOD);
+        parrotFood.add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        blocks.crops.sortedValues().map(DeferredBlock::asBlockItemId).forEach(parrotFood::add);
+        builder(ItemTags.PIG_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.SHEEP_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.COW_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.HORSE_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.GOAT_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.RABBIT_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.CAMEL_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.ARMADILLO_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.TURTLE_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
+        builder(ItemTags.LLAMA_FOOD).add(items.meals.get(MealType.MASHED_PRODUCE).asResourceKey());
 
-        final var villagerPlantableSeeds = valueLookupBuilder(ItemTags.VILLAGER_PLANTABLE_SEEDS);
-        blocks.crops.sortedValues().map(DeferredBlock::asItem).forEach(villagerPlantableSeeds::add);
-        final var villagerPicksUp = valueLookupBuilder(ItemTags.VILLAGER_PICKS_UP);
-        items.crops.sortedValues().map(DeferredItem::asItem).forEach(villagerPicksUp::add);
+        final var villagerPlantableSeeds = builder(ItemTags.VILLAGER_PLANTABLE_SEEDS);
+        blocks.crops.sortedValues().map(DeferredBlock::asBlockItemId).forEach(villagerPlantableSeeds::add);
+        final var villagerPicksUp = builder(ItemTags.VILLAGER_PICKS_UP);
+        items.crops.sortedValues().map(DeferredItem::asResourceKey).forEach(villagerPicksUp::add);
     }
 }

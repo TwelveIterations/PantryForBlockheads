@@ -7,10 +7,10 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.references.BlockItemIds;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -23,17 +23,17 @@ public class ModBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
     protected void addTags(HolderLookup.Provider arg) {
         final var blocks = PantryForBlockheads.blocks();
 
-        final var relocationNotSupported = valueLookupBuilder(TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", "relocation_not_supported")));
-        relocationNotSupported.add(blocks.artisanPress.asBlock());
+        final var relocationNotSupported = builder(TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", "relocation_not_supported")));
+        relocationNotSupported.add(blocks.artisanPress.asResourceKey());
 
-        valueLookupBuilder(ModBlockTags.BUSHES).addAll(blocks.bushes.sortedValues().map(DeferredBlock::asBlock).toList());
-        valueLookupBuilder(ModBlockTags.DROPS_SEEDS).add(Blocks.SHORT_GRASS, Blocks.TALL_GRASS);
-        final var maintainsFarmland = valueLookupBuilder(BlockTags.MAINTAINS_FARMLAND);
-        blocks.crops.sortedValues().map(DeferredBlock::asBlock).forEach(maintainsFarmland::add);
+        builder(ModBlockTags.BUSHES).addAll(blocks.bushes.sortedValues().map(DeferredBlock::asResourceKey).toList());
+        builder(ModBlockTags.DROPS_SEEDS).add(BlockItemIds.SHORT_GRASS, BlockItemIds.TALL_GRASS);
+        final var maintainsFarmland = builder(BlockTags.MAINTAINS_FARMLAND);
+        blocks.crops.sortedValues().map(DeferredBlock::asResourceKey).forEach(maintainsFarmland::add);
 
-        final var leaves = valueLookupBuilder(BlockTags.LEAVES);
-        blocks.leaves.sortedValues().map(DeferredBlock::asBlock).forEach(leaves::add);
+        final var leaves = builder(BlockTags.LEAVES);
+        blocks.leaves.sortedValues().map(DeferredBlock::asResourceKey).forEach(leaves::add);
 
-        valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(blocks.artisanPress.asBlock());
+        builder(BlockTags.MINEABLE_WITH_PICKAXE).add(blocks.artisanPress.asResourceKey());
     }
 }
