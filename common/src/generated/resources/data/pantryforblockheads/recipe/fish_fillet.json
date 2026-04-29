@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
     "#pantryforblockheads:any_edible_raw_fish",
     "pantryforblockheads:knife",

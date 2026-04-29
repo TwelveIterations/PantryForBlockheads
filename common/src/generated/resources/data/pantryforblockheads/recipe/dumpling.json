@@ -1,6 +1,5 @@
 {
   "type": "minecraft:crafting_shapeless",
-  "category": "misc",
   "ingredients": [
     "minecraft:wheat",
     "#pantryforblockheads:any_dumpling_filling",
