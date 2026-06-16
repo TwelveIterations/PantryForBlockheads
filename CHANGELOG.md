@@ -1,9 +1,1 @@
-- Added Soy Milk, an intermediate step before pressing into Tofu
-  - This fixes the recipe conflict between Soybean Seeds and Tofu in the Artisan Press
-- Changed certain low-nutrition foods to be faster to eat
-- Changed Tofu and Cheese to be slightly more nutritious
-- Changed Bagels to be slightly less nutritious
-- Fixed crash when fruit tree saplings decay
-- Fixed `chestLootHoldsBlockheadSeeds` not working reliably on modded loot chests
-- Fixed rice and soybeans to not be edible raw
-- Fixed crops having too high of a saturation modifier
+- Updated to Minecraft 26.2
