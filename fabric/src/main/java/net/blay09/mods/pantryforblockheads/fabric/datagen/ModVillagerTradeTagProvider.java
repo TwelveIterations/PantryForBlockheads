@@ -2,6 +2,7 @@ package net.blay09.mods.pantryforblockheads.fabric.datagen;
 
 import net.blay09.mods.pantryforblockheads.trade.ModVillagerTrades;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.tags.TagsProvider;
@@ -10,7 +11,7 @@ import net.minecraft.world.item.trading.VillagerTrade;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModVillagerTradeTagProvider extends TagsProvider<VillagerTrade> {
+public class ModVillagerTradeTagProvider extends FabricTagsProvider<VillagerTrade> {
     public ModVillagerTradeTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, Registries.VILLAGER_TRADE, registriesFuture);
     }
