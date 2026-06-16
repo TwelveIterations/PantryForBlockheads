@@ -2,15 +2,18 @@ package net.blay09.mods.pantryforblockheads.fabric.datagen;
 
 import net.blay09.mods.pantryforblockheads.tag.ModBiomeTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.tags.BiomeTagsProvider;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.Biomes;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ModBiomeTagProvider extends BiomeTagsProvider {
+public class ModBiomeTagProvider extends FabricTagsProvider<Biome> {
     public ModBiomeTagProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, registriesFuture);
+        super(output, Registries.BIOME, registriesFuture);
     }
 
     @Override
