@@ -6,10 +6,10 @@ import net.blay09.mods.pantryforblockheads.PantryForBlockheads;
 import net.blay09.mods.pantryforblockheads.item.BushType;
 import net.blay09.mods.pantryforblockheads.item.CropType;
 import net.blay09.mods.pantryforblockheads.item.MealType;
+import net.blay09.mods.pantryforblockheads.tag.ModItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.minecraft.core.HolderLookup;
-import net.blay09.mods.pantryforblockheads.tag.ModItemTags;
 import net.minecraft.references.BlockItemIds;
 import net.minecraft.references.ItemIds;
 import net.minecraft.tags.ItemTags;
@@ -85,5 +85,8 @@ public class ModItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
         blocks.crops.sortedValues().map(DeferredBlock::asBlockItemId).forEach(villagerPlantableSeeds::add);
         final var villagerPicksUp = builder(ItemTags.VILLAGER_PICKS_UP);
         items.crops.sortedValues().map(DeferredItem::asResourceKey).forEach(villagerPicksUp::add);
+
+        final var saplings = builder(ItemTags.SAPLINGS);
+        blocks.saplings.sortedValues().map(DeferredBlock::asBlockItemId).forEach(saplings::add);
     }
 }
