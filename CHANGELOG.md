@@ -1,1 +1,1 @@
-- Updated to Minecraft 26.2
+- Added missing sapling tags
