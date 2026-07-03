@@ -9,6 +9,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.references.BlockItemIds;
 import net.minecraft.resources.Identifier;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 
@@ -33,6 +34,9 @@ public class ModBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
 
         final var leaves = builder(BlockTags.LEAVES);
         blocks.leaves.sortedValues().map(DeferredBlock::asResourceKey).forEach(leaves::add);
+
+        final var saplings = builder(BlockItemTags.SAPLINGS.block());
+        blocks.saplings.sortedValues().map(DeferredBlock::asResourceKey).forEach(saplings::add);
 
         builder(BlockTags.MINEABLE_WITH_PICKAXE).add(blocks.artisanPress.asResourceKey());
     }
