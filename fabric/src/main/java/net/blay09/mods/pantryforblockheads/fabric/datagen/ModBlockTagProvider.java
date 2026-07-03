@@ -34,6 +34,9 @@ public class ModBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
         final var leaves = valueLookupBuilder(BlockTags.LEAVES);
         blocks.leaves.sortedValues().map(DeferredBlock::asBlock).forEach(leaves::add);
 
+        final var saplings = valueLookupBuilder(BlockTags.SAPLINGS);
+        blocks.saplings.sortedValues().map(DeferredBlock::asBlock).forEach(saplings::add);
+
         valueLookupBuilder(BlockTags.MINEABLE_WITH_PICKAXE).add(blocks.artisanPress.asBlock());
     }
 }
