@@ -1,1 +1,1 @@
-- Added missing sapling block tags
+- Fixed leaves not supporting modded shears when breaking
