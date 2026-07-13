@@ -57,6 +57,7 @@ public class ModItems {
                             fruits.sortedValues().map(DeferredItem::asItem).forEach(output::accept);
                             blocks.crops.sortedValues().map(DeferredBlock::asItem).forEach(output::accept);
                             blocks.saplings.sortedValues().map(DeferredBlock::asItem).forEach(output::accept);
+                            blocks.leaves.sortedValues().map(DeferredBlock::asItem).forEach(output::accept);
                             meals.sortedValues().map(DeferredItem::asItem).forEach(output::accept);
 
                             output.accept(magicSprinkles);
