@@ -88,5 +88,8 @@ public class ModItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 
         final var saplings = builder(ItemTags.SAPLINGS);
         blocks.saplings.sortedValues().map(DeferredBlock::asBlockItemId).forEach(saplings::add);
+
+        final var leaves = builder(ItemTags.LEAVES);
+        blocks.leaves.sortedValues().map(DeferredBlock::asBlockItemId).forEach(leaves::add);
     }
 }

@@ -29,8 +29,12 @@ public class ModBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
 
         builder(ModBlockTags.BUSHES).addAll(blocks.bushes.sortedValues().map(DeferredBlock::asResourceKey).toList());
         builder(ModBlockTags.DROPS_SEEDS).add(BlockItemIds.SHORT_GRASS, BlockItemIds.TALL_GRASS);
+
         final var maintainsFarmland = builder(BlockTags.MAINTAINS_FARMLAND);
         blocks.crops.sortedValues().map(DeferredBlock::asResourceKey).forEach(maintainsFarmland::add);
+
+        final var crops = builder(BlockTags.CROPS);
+        blocks.crops.sortedValues().map(DeferredBlock::asResourceKey).forEach(crops::add);
 
         final var leaves = builder(BlockTags.LEAVES);
         blocks.leaves.sortedValues().map(DeferredBlock::asResourceKey).forEach(leaves::add);
