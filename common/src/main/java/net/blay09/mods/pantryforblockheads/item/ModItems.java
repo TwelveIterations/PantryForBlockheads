@@ -35,8 +35,6 @@ public class ModItems {
         crops = items.registerDiscriminated(CropType.values(), CropType::getSerializedName, (_, properties) -> new Item(properties), CropType::applyProperties).asDiscriminatedItems();
         fruits = items.registerDiscriminated(TreeType.values(), Enum::toString, (_, properties) -> new Item(properties), (type, it) -> it.food(type.foodProperties())).asDiscriminatedItems();
         meals = items.registerDiscriminated(MealType.values(), MealType::getSerializedName, (_, properties) -> new Item(properties), MealType::applyProperties).asDiscriminatedItems();
-
-        // TODO We want crops to be compostable, but Balm does not support it yet.
     }
 
     public void initializeCreativeModeTabs(BalmCreativeModeTabRegistrar creativeModeTabs) {
