@@ -2,7 +2,7 @@
 balm = "26.1.2.3-SNAPSHOT"
 minecraft = "26.1.2"
 neoForm = "26.1.2-1"
-neoForge = "26.1.2.12-beta"
+neoForge = "26.1.2.20-beta"
 forge = "64.0.4"
 fabricApi = "0.146.0+26.1.2"
 fabricLoader = "0.19.2"
