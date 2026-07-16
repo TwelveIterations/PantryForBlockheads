@@ -6,11 +6,17 @@ import net.blay09.mods.pantryforblockheads.PantryForBlockheads;
 import net.blay09.mods.pantryforblockheads.item.BushType;
 import net.blay09.mods.pantryforblockheads.item.CropType;
 import net.blay09.mods.pantryforblockheads.item.MealType;
+import net.blay09.mods.pantryforblockheads.item.TreeType;
 import net.blay09.mods.pantryforblockheads.tag.ModItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.concurrent.CompletableFuture;
@@ -63,6 +69,69 @@ public class ModItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
                 .add(items.meals.get(MealType.SANDWICH).asItem())
                 .add(items.meals.get(MealType.TACO).asItem());
 
+        final var crops = valueLookupBuilder(ConventionalItemTags.CROPS);
+        items.crops.sortedValues().map(DeferredItem::asItem).forEach(crops::add);
+        for (final var cropType : CropType.values()) {
+            valueLookupBuilder(conventionalItemTag("crops/" + cropType.getSerializedName()))
+                    .add(items.crops.get(cropType).asItem());
+        }
+
+        final var seeds = valueLookupBuilder(ConventionalItemTags.SEEDS);
+        blocks.crops.sortedValues().map(DeferredBlock::asItem).forEach(seeds::add);
+        for (final var cropType : CropType.values()) {
+            valueLookupBuilder(conventionalItemTag("seeds/" + cropType.getSerializedName()))
+                    .add(blocks.crops.get(cropType).asItem());
+        }
+
+        valueLookupBuilder(ConventionalItemTags.VEGETABLE_FOODS)
+                .add(items.crops.get(CropType.BELL_PEPPER).asItem())
+                .add(items.crops.get(CropType.BROCCOLI).asItem())
+                .add(items.crops.get(CropType.CAULIFLOWER).asItem())
+                .add(items.crops.get(CropType.CHILI_PEPPER).asItem())
+                .add(items.crops.get(CropType.CORN).asItem())
+                .add(items.crops.get(CropType.EGGPLANT).asItem())
+                .add(items.crops.get(CropType.LETTUCE).asItem())
+                .add(items.crops.get(CropType.ONION).asItem())
+                .add(items.crops.get(CropType.TOMATO).asItem())
+                .add(items.crops.get(CropType.TURNIP).asItem());
+        valueLookupBuilder(ConventionalItemTags.FRUIT_FOODS)
+                .add(blocks.bushes.get(BushType.GRAPES).asItem())
+                .add(items.fruits.get(TreeType.LEMON).asItem())
+                .add(items.fruits.get(TreeType.PEACH).asItem());
+        valueLookupBuilder(ConventionalItemTags.BERRY_FOODS)
+                .add(blocks.bushes.get(BushType.BLUEBERRIES).asItem())
+                .add(items.crops.get(CropType.STRAWBERRY).asItem());
+
+        final var foods = valueLookupBuilder(ConventionalItemTags.FOODS);
+        items.meals.sortedValues().map(DeferredItem::asItem).forEach(foods::add);
+        foods.add(blocks.bushes.get(BushType.BLUEBERRIES).asItem())
+                .add(blocks.bushes.get(BushType.GRAPES).asItem())
+                .add(items.fruits.get(TreeType.LEMON).asItem())
+                .add(items.fruits.get(TreeType.PEACH).asItem())
+                .add(items.crops.get(CropType.BELL_PEPPER).asItem())
+                .add(items.crops.get(CropType.BROCCOLI).asItem())
+                .add(items.crops.get(CropType.CAULIFLOWER).asItem())
+                .add(items.crops.get(CropType.CHILI_PEPPER).asItem())
+                .add(items.crops.get(CropType.CORN).asItem())
+                .add(items.crops.get(CropType.EGGPLANT).asItem())
+                .add(items.crops.get(CropType.LETTUCE).asItem())
+                .add(items.crops.get(CropType.ONION).asItem())
+                .add(items.crops.get(CropType.PEANUT).asItem())
+                .add(items.crops.get(CropType.STRAWBERRY).asItem())
+                .add(items.crops.get(CropType.TOMATO).asItem())
+                .add(items.crops.get(CropType.TURNIP).asItem());
+        valueLookupBuilder(ConventionalItemTags.BREAD_FOODS)
+                .add(items.meals.get(MealType.FLATBREAD).asItem());
+        valueLookupBuilder(ConventionalItemTags.COOKED_FISH_FOODS)
+                .add(items.meals.get(MealType.FISH_FILLET).asItem())
+                .add(items.meals.get(MealType.FISH_STICKS).asItem());
+        valueLookupBuilder(ConventionalItemTags.COOKED_MEAT_FOODS)
+                .add(items.meals.get(MealType.BACON).asItem())
+                .add(items.meals.get(MealType.CHICKEN_NUGGETS).asItem())
+                .add(items.meals.get(MealType.SAUSAGE).asItem());
+        valueLookupBuilder(ConventionalItemTags.CANDY_FOODS)
+                .add(items.meals.get(MealType.CHOCOLATE).asItem());
+
         final var chickenFood = valueLookupBuilder(ItemTags.CHICKEN_FOOD);
         chickenFood.add(items.meals.get(MealType.MASHED_PRODUCE).asItem());
         blocks.crops.sortedValues().map(DeferredBlock::asItem).forEach(chickenFood::add);
@@ -90,5 +159,9 @@ public class ModItemTagProvider extends FabricTagsProvider.ItemTagsProvider {
 
         final var leaves = valueLookupBuilder(ItemTags.LEAVES);
         blocks.leaves.sortedValues().map(DeferredBlock::asItem).forEach(leaves::add);
+    }
+
+    private static TagKey<Item> conventionalItemTag(String path) {
+        return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", path));
     }
 }

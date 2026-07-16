@@ -5,6 +5,7 @@ import net.blay09.mods.pantryforblockheads.PantryForBlockheads;
 import net.blay09.mods.pantryforblockheads.tag.ModBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
@@ -23,7 +24,7 @@ public class ModBlockTagProvider extends FabricTagsProvider.BlockTagsProvider {
     protected void addTags(HolderLookup.Provider arg) {
         final var blocks = PantryForBlockheads.blocks();
 
-        final var relocationNotSupported = valueLookupBuilder(TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", "relocation_not_supported")));
+        final var relocationNotSupported = valueLookupBuilder(ConventionalBlockTags.RELOCATION_NOT_SUPPORTED);
         relocationNotSupported.add(blocks.artisanPress.asBlock());
 
         valueLookupBuilder(ModBlockTags.BUSHES).addAll(blocks.bushes.sortedValues().map(DeferredBlock::asBlock).toList());
