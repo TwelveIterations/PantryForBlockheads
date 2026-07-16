@@ -444,6 +444,12 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy("has_onion", has(items.crops.get(CropType.ONION)))
                         .save(exporter);
 
+                shapeless(RecipeCategory.FOOD, Items.MELON_SLICE, 9)
+                        .requires(Items.MELON)
+                        .requires(items.knife)
+                        .unlockedBy("has_melon", has(Items.MELON))
+                        .save(exporter);
+
                 SimpleCookingRecipeBuilder.smelting(
                                 Ingredient.of(items.crops.get(CropType.CORN)),
                                 RecipeCategory.FOOD,
