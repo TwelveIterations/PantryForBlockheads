@@ -1,1 +1,7 @@
-- Fixed leaves not supporting modded shears when breaking
+- Added a recipe for slicing a melon with a knife
+- Fixed items not being compostable
+- Fixed leaves not showing up in Creative / JEI
+- Fixed typo in Pink Doughnut with Sprinkles
+- Fixed leaves missing leaves item tag
+- Fixed crops missing crop block tag
+- Fixed blocks and items missing conventional tags
