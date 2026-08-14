@@ -12,3 +12,7 @@ This mod requires [Balm](https://www.curseforge.com/minecraft/mc-mods/balm), whi
 *   Utensils to place inside your [Cooking for Blockheads](https://www.curseforge.com/minecraft/mc-mods/cooking-for-blockheads) kitchen
 *   Artisan Press for making Cheese, Tofu and more
 *   Integration with [Farming for Blockheads](https://www.curseforge.com/minecraft/mc-mods/farming-for-blockheads) and [Little Joys](https://www.curseforge.com/minecraft/mc-mods/little-joys)
+
+### ![Additional Credits](https://mods.twelveiterations.com/img/credits-header.png)
+
+Many of the item icons included are by [ARoachIFoundOnMyPillow](https://opengameart.org/users/aroachifoundonmypillow) and were publicly released under the CC-0 license [here](https://opengameart.org/content/16x16-food).
