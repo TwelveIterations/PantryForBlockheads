@@ -16,6 +16,8 @@ import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
+import net.minecraft.world.phys.AABB;
 
 public class ModBlocks {
 
@@ -33,19 +35,21 @@ public class ModBlocks {
                 .withDefaultItem()
                 .asDeferredBlock();
         bushes = blocks.registerDiscriminated(BushType.values(), BushType::bushName, PantryBushBlock::new, it -> it
-                        .mapColor(MapColor.PLANT).randomTicks().noCollision().sound(SoundType.SWEET_BERRY_BUSH).pushReaction(PushReaction.DESTROY))
+                        .mapColor(MapColor.PLANT).randomTicks().noCollision().sound(SoundType.SWEET_BERRY_BUSH).pushReaction(PushReaction.POPPED))
                 .withItems(Enum::toString, BlockItem::new, (type, properties) -> properties.useItemDescriptionPrefix().food(type.foodProperties()))
                 .asDiscriminatedBlocks();
         crops = blocks.registerDiscriminated(CropType.values(), CropType::plural, PantryCropBlock::new, it -> it
-                        .mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.DESTROY))
-                .withItems(DiscriminatedItems.suffixWith("seeds"), BlockItem::new, (_, properties) -> properties.useItemDescriptionPrefix())
+                        .mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak().sound(SoundType.CROP).pushReaction(PushReaction.POPPED))
+                .withItems(DiscriminatedItems.suffixWith("seeds"), BlockItem::new, (_, properties) -> properties
+                        .useItemDescriptionPrefix()
+                        .compostable(ContextIntProviders.COMPOSTABLE_LOW))
                 .asDiscriminatedBlocks();
         saplings = blocks.registerDiscriminated(TreeType.values(), DiscriminatedBlocks.suffixWith("sapling"), PantrySaplingBlock::new, it -> it
-                        .mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.DESTROY))
-                .withDefaultItems()
+                        .mapColor(MapColor.PLANT).noCollision().randomTicks().instabreak().sound(SoundType.GRASS).pushReaction(PushReaction.POPPED))
+                .withDefaultItems(properties -> properties.compostable(ContextIntProviders.COMPOSTABLE_LOW))
                 .asDiscriminatedBlocks();
         pottedSaplings = blocks.registerDiscriminated(TreeType.values(), it -> "potted_" + it + "_sapling", (type, properties) -> new PantryFlowerPotBlock(saplings.get(type).asBlock(), properties), it -> it
-                        .instabreak().noOcclusion().pushReaction(PushReaction.DESTROY))
+                        .instabreak().noOcclusion().pushReaction(PushReaction.POPPED))
                 .withDefaultItems()
                 .asDiscriminatedBlocks();
         leaves = blocks.registerDiscriminated(TreeType.values(), DiscriminatedBlocks.suffixWith("leaves"), (_, properties) -> new PantryLeavesBlock(0.01f, properties), it -> it
@@ -58,9 +62,9 @@ public class ModBlocks {
                         .isSuffocating(this::never)
                         .isViewBlocking(this::never)
                         .ignitedByLava()
-                        .pushReaction(PushReaction.DESTROY)
+                        .pushReaction(PushReaction.POPPED)
                         .isRedstoneConductor(this::never))
-                .withDefaultItems()
+                .withDefaultItems(properties -> properties.compostable(ContextIntProviders.COMPOSTABLE_LOW_MEDIUM))
                 .asDiscriminatedBlocks();
     }
 
@@ -69,6 +73,10 @@ public class ModBlocks {
     }
 
     private boolean never(BlockState state, BlockGetter blockGetter, BlockPos blockPos) {
+        return false;
+    }
+
+    private boolean never(BlockState state, BlockGetter blockGetter, BlockPos blockPos, AABB nearPlaneBox) {
         return false;
     }
 

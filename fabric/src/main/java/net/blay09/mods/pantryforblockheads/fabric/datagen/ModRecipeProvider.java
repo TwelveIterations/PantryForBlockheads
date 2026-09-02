@@ -1,6 +1,6 @@
 package net.blay09.mods.pantryforblockheads.fabric.datagen;
 
-import net.blay09.mods.balm.tags.BalmItemTags;
+import net.blay09.mods.balm.tags.ConventionalItemTags;
 import net.blay09.mods.pantryforblockheads.PantryForBlockheads;
 import net.blay09.mods.pantryforblockheads.item.CropType;
 import net.blay09.mods.pantryforblockheads.item.MealType;
@@ -8,12 +8,14 @@ import net.blay09.mods.pantryforblockheads.recipe.ArtisanPressRecipe;
 import net.blay09.mods.pantryforblockheads.tag.ModItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -33,8 +35,8 @@ public class ModRecipeProvider extends FabricRecipeProvider {
     }
 
     @Override
-    protected RecipeProvider createRecipeProvider(HolderLookup.Provider registryLookup, RecipeOutput exporter) {
-        return new RecipeProvider(registryLookup, exporter) {
+    protected RecipeProvider createRecipeProvider(HolderLookup.Provider registries, BootstrapContext<Recipe<?>> recipes, BootstrapContext<Advancement> advancements) {
+        return new RecipeProvider(recipes, advancements) {
             @Override
             public void buildRecipes() {
                 final var blocks = PantryForBlockheads.blocks();
@@ -48,7 +50,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('B', Items.MUD_BRICKS)
                         .define('P', Items.HEAVY_WEIGHTED_PRESSURE_PLATE)
                         .unlockedBy("has_anvil", has(Items.ANVIL))
-                        .save(exporter);
+                        .save(output);
 
                 final var items = PantryForBlockheads.items();
                 shaped(RecipeCategory.TOOLS, items.fryingPan)
@@ -57,26 +59,26 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('I', Items.IRON_INGOT)
                         .define('C', Items.COPPER_INGOT)
                         .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-                        .save(exporter);
+                        .save(output);
                 shaped(RecipeCategory.TOOLS, items.pot)
                         .pattern("IBI")
                         .pattern(" I ")
                         .define('I', Items.IRON_INGOT)
                         .define('B', Items.BUCKET)
                         .unlockedBy("has_bucket", has(Items.BUCKET))
-                        .save(exporter);
+                        .save(output);
                 shapeless(RecipeCategory.TOOLS, items.mixingBowl)
                         .requires(Items.BOWL)
                         .requires(Items.STICK)
                         .unlockedBy("has_bowl", has(Items.BOWL))
-                        .save(exporter);
+                        .save(output);
                 shaped(RecipeCategory.TOOLS, items.bakingSheet)
                         .pattern("PPP")
                         .pattern("III")
                         .define('P', Items.PAPER)
                         .define('I', Items.IRON_INGOT)
                         .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-                        .save(exporter);
+                        .save(output);
                 shaped(RecipeCategory.TOOLS, items.knife)
                         .pattern(" I ")
                         .pattern("II ")
@@ -84,21 +86,21 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('I', Items.IRON_INGOT)
                         .define('S', Items.STICK)
                         .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.FORTUNE_COOKIE))
                         .requires(items.magicSprinkles)
                         .requires(Items.COOKIE)
                         .requires(Items.PAPER)
                         .unlockedBy("has_cookie", has(Items.COOKIE))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.CHOCOLATE))
                         .requires(items.mixingBowl)
                         .requires(Items.COCOA_BEANS)
                         .requires(Items.SUGAR)
                         .unlockedBy("has_cocoa_beans", has(Items.COCOA_BEANS))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.magicSprinkles)
                         .requires(Items.GOLD_NUGGET)
@@ -106,20 +108,20 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(Items.SUGAR)
                         .requires(Items.HONEYCOMB)
                         .unlockedBy("has_honeycomb", has(Items.HONEYCOMB))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.BACON))
                         .requires(items.fryingPan)
                         .requires(items.knife)
                         .requires(Items.PORKCHOP)
                         .unlockedBy("has_porkchop", has(Items.PORKCHOP))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.BREADSTICK))
                         .requires(Items.WHEAT)
                         .requires(Items.STICK)
                         .unlockedBy("has_wheat", has(Items.WHEAT))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.MAKI_SUSHI), 6)
                         .requires(items.crops.get(CropType.RICE))
@@ -127,40 +129,40 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(Items.KELP)
                         .requires(items.knife)
                         .unlockedBy("has_rice", has(items.crops.get(CropType.RICE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.NIGIRI_SUSHI), 2)
                         .requires(items.crops.get(CropType.RICE))
                         .requires(ModItemTags.ANY_SUSHI_FILLING)
                         .requires(items.knife)
                         .unlockedBy("has_rice", has(items.crops.get(CropType.RICE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.INARI_SUSHI), 2)
                         .requires(items.crops.get(CropType.RICE))
                         .requires(items.meals.get(MealType.TOFU))
                         .requires(items.fryingPan)
                         .unlockedBy("has_tofu", has(items.meals.get(MealType.TOFU)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.DUMPLING))
                         .requires(Items.WHEAT)
                         .requires(ModItemTags.ANY_DUMPLING_FILLING)
                         .requires(items.pot)
                         .unlockedBy("has_any_dumpling_filling", has(ModItemTags.ANY_DUMPLING_FILLING))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.RICE_BALL), 3)
                         .requires(items.crops.get(CropType.RICE))
                         .requires(Items.KELP)
                         .unlockedBy("has_rice", has(items.crops.get(CropType.RICE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.RICE_CRACKER), 3)
                         .requires(items.crops.get(CropType.RICE))
                         .requires(items.bakingSheet)
                         .unlockedBy("has_rice", has(items.crops.get(CropType.RICE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.SANDWICH))
                         .requires(items.crops.get(CropType.LETTUCE))
@@ -168,7 +170,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.meals.get(MealType.CHEESE))
                         .requires(Items.BREAD)
                         .unlockedBy("has_bread", has(Items.BREAD))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.FOOD, items.meals.get(MealType.CROISSANT))
                         .pattern(" W ")
@@ -176,7 +178,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .pattern(" W ")
                         .define('W', Items.WHEAT)
                         .unlockedBy("has_wheat", has(Items.WHEAT))
-                        .save(exporter);
+                        .save(output);
 
                 shaped(RecipeCategory.FOOD, items.meals.get(MealType.PRETZEL))
                         .pattern("WSW")
@@ -185,21 +187,21 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('W', Items.WHEAT)
                         .define('S', Items.PUMPKIN_SEEDS)
                         .unlockedBy("has_wheat", has(Items.WHEAT))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.SAUSAGE), 2)
                         .requires(Items.PORKCHOP)
                         .requires(items.knife)
                         .requires(items.pot)
                         .unlockedBy("has_porkchop", has(Items.PORKCHOP))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.HOTDOG))
                         .requires(items.meals.get(MealType.SAUSAGE))
                         .requires(Items.BREAD)
                         .requires(items.knife)
                         .unlockedBy("has_sausage", has(items.meals.get(MealType.SAUSAGE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.FALAFEL))
                         .requires(items.crops.get(CropType.SOYBEAN))
@@ -207,7 +209,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.crops.get(CropType.BELL_PEPPER))
                         .requires(items.mixingBowl)
                         .unlockedBy("has_soybean", has(items.crops.get(CropType.SOYBEAN)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.TACO))
                         .requires(items.meals.get(MealType.FLATBREAD))
@@ -215,7 +217,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.crops.get(CropType.CORN))
                         .requires(items.crops.get(CropType.LETTUCE))
                         .unlockedBy("has_corn", has(items.crops.get(CropType.CORN)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.BURRITO))
                         .requires(items.meals.get(MealType.FLATBREAD))
@@ -225,7 +227,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.crops.get(CropType.RICE))
                         .requires(items.crops.get(CropType.TOMATO))
                         .unlockedBy("has_corn", has(items.crops.get(CropType.CORN)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.BURGER))
                         .requires(Items.WHEAT)
@@ -235,7 +237,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.crops.get(CropType.ONION))
                         .requires(items.meals.get(MealType.CHEESE))
                         .unlockedBy("has_cheese", has(items.meals.get(MealType.CHEESE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.PANCAKES))
                         .requires(ItemTags.EGGS)
@@ -244,7 +246,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(Items.WHEAT)
                         .requires(items.fryingPan)
                         .unlockedBy("has_milk_bucket", has(Items.MILK_BUCKET))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.WAFFLE))
                         .requires(ItemTags.EGGS)
@@ -255,21 +257,21 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.bakingSheet)
                         .requires(items.mixingBowl)
                         .unlockedBy("has_milk_bucket", has(Items.MILK_BUCKET))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.SOY_MILK))
                         .requires(items.crops.get(CropType.SOYBEAN))
                         .requires(Items.GLASS_BOTTLE)
                         .requires(Items.WATER_BUCKET)
                         .unlockedBy("has_soybean", has(items.crops.get(CropType.SOYBEAN)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.BAGEL))
                         .requires(Items.WHEAT)
                         .requires(Items.SUGAR)
                         .requires(items.bakingSheet)
                         .unlockedBy("has_wheat", has(Items.WHEAT))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.MUFFIN), 2)
                         .requires(ItemTags.EGGS)
@@ -279,7 +281,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.bakingSheet)
                         .requires(items.mixingBowl)
                         .unlockedBy("has_wheat", has(Items.WHEAT))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.BERRY_MUFFIN), 2)
                         .requires(ItemTags.EGGS)
@@ -290,7 +292,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.mixingBowl)
                         .requires(ModItemTags.ANY_BERRY)
                         .unlockedBy("has_any_berry", has(ModItemTags.ANY_BERRY))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.PINK_DOUGHNUT))
                         .requires(ItemTags.EGGS)
@@ -299,9 +301,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(Items.WHEAT)
                         .requires(items.fryingPan)
                         .requires(items.mixingBowl)
-                        .requires(BalmItemTags.PINK_DYES)
+                        .requires(ConventionalItemTags.PINK_DYES)
                         .unlockedBy("has_wheat", has(Items.WHEAT))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.PINK_DOUGHNUT_SPRINKLES))
                         .requires(ItemTags.EGGS)
@@ -311,15 +313,15 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.fryingPan)
                         .requires(items.mixingBowl)
                         .requires(items.magicSprinkles)
-                        .requires(BalmItemTags.PINK_DYES)
+                        .requires(ConventionalItemTags.PINK_DYES)
                         .unlockedBy("has_magic_sprinkles", has(items.magicSprinkles))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.PINK_DOUGHNUT_SPRINKLES))
                         .requires(items.meals.get(MealType.PINK_DOUGHNUT))
                         .requires(items.magicSprinkles)
                         .unlockedBy("has_magic_sprinkles", has(items.magicSprinkles))
-                        .save(exporter, "sprinkle_pink_doughnut");
+                        .save(output, "sprinkle_pink_doughnut");
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.CHOCOLATE_DOUGHNUT))
                         .requires(ItemTags.EGGS)
@@ -330,7 +332,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.mixingBowl)
                         .requires(items.meals.get(MealType.CHOCOLATE))
                         .unlockedBy("has_wheat", has(Items.WHEAT))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.CUPCAKE), 2)
                         .requires(ItemTags.EGGS)
@@ -341,7 +343,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.bakingSheet)
                         .requires(items.mixingBowl)
                         .unlockedBy("has_wheat", has(Items.WHEAT))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.CHOCOLATE_CUPCAKE), 2)
                         .requires(ItemTags.EGGS)
@@ -352,48 +354,48 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.mixingBowl)
                         .requires(items.meals.get(MealType.CHOCOLATE))
                         .unlockedBy("has_chocolate", has(items.meals.get(MealType.CHOCOLATE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.ICECREAM))
                         .requires(Items.SNOWBALL)
                         .requires(Items.WHEAT)
                         .requires(Items.SUGAR)
                         .unlockedBy("has_snowball", has(Items.SNOWBALL))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.CHOCOLATE_ICECREAM))
                         .requires(Items.SNOWBALL)
                         .requires(Items.WHEAT)
                         .requires(items.meals.get(MealType.CHOCOLATE))
                         .unlockedBy("has_snowball", has(Items.SNOWBALL))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.FISH_FILLET))
                         .requires(ModItemTags.ANY_EDIBLE_RAW_FISH)
                         .requires(items.knife)
                         .requires(items.fryingPan)
                         .unlockedBy("has_edible_fishes", has(ModItemTags.ANY_EDIBLE_RAW_FISH))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.FISH_STICKS))
                         .requires(ModItemTags.ANY_EDIBLE_RAW_FISH)
                         .requires(Items.STICK)
                         .requires(items.fryingPan)
                         .unlockedBy("has_edible_fishes", has(ModItemTags.ANY_EDIBLE_RAW_FISH))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.CHEESE_PIZZA))
                         .requires(items.meals.get(MealType.FLATBREAD))
                         .requires(items.crops.get(CropType.TOMATO))
                         .requires(items.meals.get(MealType.CHEESE))
                         .unlockedBy("has_cheese", has(items.meals.get(MealType.CHEESE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.CHEESE_PIZZA_SLICE), 8)
                         .requires(items.meals.get(MealType.CHEESE_PIZZA))
                         .requires(items.knife)
                         .unlockedBy("has_cheese_pizza", has(items.meals.get(MealType.CHEESE_PIZZA)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.PEPPERONI_PIZZA))
                         .requires(items.meals.get(MealType.FLATBREAD))
@@ -401,13 +403,13 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.meals.get(MealType.CHEESE))
                         .requires(items.meals.get(MealType.SAUSAGE))
                         .unlockedBy("has_cheese", has(items.meals.get(MealType.CHEESE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.PEPPERONI_PIZZA_SLICE), 8)
                         .requires(items.meals.get(MealType.PEPPERONI_PIZZA))
                         .requires(items.knife)
                         .unlockedBy("has_pepperoni_pizza", has(items.meals.get(MealType.PEPPERONI_PIZZA)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.VEGETABLE_PIZZA))
                         .requires(items.meals.get(MealType.FLATBREAD))
@@ -415,19 +417,19 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.meals.get(MealType.CHEESE))
                         .requires(ModItemTags.ANY_PIZZA_VEGETABLE)
                         .unlockedBy("has_cheese", has(items.meals.get(MealType.CHEESE)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.VEGETABLE_PIZZA_SLICE), 8)
                         .requires(items.meals.get(MealType.VEGETABLE_PIZZA))
                         .requires(items.knife)
                         .unlockedBy("has_vegetable_pizza", has(items.meals.get(MealType.VEGETABLE_PIZZA)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.FRIED_EGG))
                         .requires(ItemTags.EGGS)
                         .requires(items.fryingPan)
                         .unlockedBy("has_eggs", has(ItemTags.EGGS))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.CHICKEN_NUGGETS), 6)
                         .requires(Items.COOKED_CHICKEN)
@@ -435,20 +437,20 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .requires(items.knife)
                         .requires(items.fryingPan)
                         .unlockedBy("has_cooked_chicken", has(Items.COOKED_CHICKEN))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, items.meals.get(MealType.ONION_RINGS), 2)
                         .requires(items.crops.get(CropType.ONION))
                         .requires(Items.WHEAT)
                         .requires(items.fryingPan)
                         .unlockedBy("has_onion", has(items.crops.get(CropType.ONION)))
-                        .save(exporter);
+                        .save(output);
 
                 shapeless(RecipeCategory.FOOD, Items.MELON_SLICE, 9)
                         .requires(Items.MELON)
                         .requires(items.knife)
                         .unlockedBy("has_melon", has(Items.MELON))
-                        .save(exporter);
+                        .save(output);
 
                 SimpleCookingRecipeBuilder.smelting(
                                 Ingredient.of(items.crops.get(CropType.CORN)),
@@ -458,73 +460,73 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                                 0.1f,
                                 200)
                         .unlockedBy("has_corn", has(items.crops.get(CropType.CORN)))
-                        .save(exporter);
+                        .save(output);
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("flatbread")),
                         Ingredient.of(Items.BREAD),
                         new ItemStackTemplate(items.meals.get(MealType.FLATBREAD).asItem()));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("cheese")),
                         Ingredient.of(Items.MILK_BUCKET),
                         new ItemStackTemplate(items.meals.get(MealType.CHEESE).asItem()));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("tofu")),
                         Ingredient.of(items.meals.get(MealType.SOY_MILK)),
                         new ItemStackTemplate(items.meals.get(MealType.TOFU).asItem()),
                         new ItemStackTemplate(Items.GLASS_BOTTLE));
 
                 for (final var cropType : CropType.values()) {
-                    artisanPress(exporter,
+                    artisanPress(output,
                             ResourceKey.create(Registries.RECIPE, id(cropType + "_seeds")),
                             Ingredient.of(items.crops.get(cropType)),
                             new ItemStackTemplate(blocks.crops.get(cropType).asItem()),
                             new ItemStackTemplate(items.meals.get(MealType.MASHED_PRODUCE).asItem()));
                 }
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("sugar")),
                         Ingredient.of(Items.SUGAR_CANE),
                         new ItemStackTemplate(Items.SUGAR));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("magic_sparkles")),
                         Ingredient.of(Items.EXPERIENCE_BOTTLE),
                         new ItemStackTemplate(Items.GLASS_BOTTLE),
                         new ItemStackTemplate(items.magicSprinkles.asItem()));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("leather")),
                         Ingredient.of(Items.ROTTEN_FLESH),
                         new ItemStackTemplate(Items.LEATHER));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("melon")),
                         Ingredient.of(Items.GLISTERING_MELON_SLICE),
                         new ItemStackTemplate(Items.MELON_SLICE),
                         new ItemStackTemplate(items.magicSprinkles.asItem()));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("apple")),
                         Ingredient.of(Items.GOLDEN_APPLE),
                         new ItemStackTemplate(Items.APPLE),
                         new ItemStackTemplate(items.magicSprinkles.asItem()));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("golden_apple")),
                         Ingredient.of(Items.ENCHANTED_GOLDEN_APPLE),
                         new ItemStackTemplate(Items.GOLDEN_APPLE),
                         new ItemStackTemplate(items.magicSprinkles.asItem()));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("slime")),
                         Ingredient.of(Items.POISONOUS_POTATO),
                         new ItemStackTemplate(Items.POTATO),
                         new ItemStackTemplate(Items.SLIME_BALL));
 
-                artisanPress(exporter,
+                artisanPress(output,
                         ResourceKey.create(Registries.RECIPE, id("you_monster")),
                         Ingredient.of(Items.DRIED_GHAST),
                         new ItemStackTemplate(Items.GHAST_TEAR),
@@ -538,10 +540,10 @@ public class ModRecipeProvider extends FabricRecipeProvider {
         return PantryForBlockheads.MOD_ID;
     }
 
-    private static void artisanPress(RecipeOutput exporter,
+    private static void artisanPress(RecipeOutput output,
                                      ResourceKey<Recipe<?>> recipeKey,
                                      Ingredient ingredient,
                                      ItemStackTemplate... results) {
-        exporter.accept(recipeKey, new ArtisanPressRecipe(ingredient, List.of(results)), null);
+        output.accept(recipeKey, new ArtisanPressRecipe(ingredient, List.of(results)), null);
     }
 }

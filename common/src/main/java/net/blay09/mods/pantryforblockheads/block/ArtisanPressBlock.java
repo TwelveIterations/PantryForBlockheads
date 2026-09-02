@@ -43,7 +43,6 @@ import java.util.EnumMap;
 import java.util.Map;
 
 public class ArtisanPressBlock extends BaseEntityBlock {
-    public static final MapCodec<ArtisanPressBlock> CODEC = simpleCodec(ArtisanPressBlock::new);
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
@@ -63,11 +62,6 @@ public class ArtisanPressBlock extends BaseEntityBlock {
         registerDefaultState(stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
                 .setValue(HALF, DoubleBlockHalf.LOWER));
-    }
-
-    @Override
-    protected MapCodec<? extends BaseEntityBlock> codec() {
-        return CODEC;
     }
 
     @Override

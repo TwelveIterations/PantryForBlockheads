@@ -8,7 +8,6 @@ import net.blay09.mods.pantryforblockheads.block.ModBlocks;
 import net.blay09.mods.pantryforblockheads.block.entity.ModBlockEntities;
 import net.blay09.mods.pantryforblockheads.core.component.ModDataComponents;
 import net.blay09.mods.pantryforblockheads.effect.ModMobEffects;
-import net.blay09.mods.pantryforblockheads.item.ModCompostables;
 import net.blay09.mods.pantryforblockheads.item.ModItems;
 import net.blay09.mods.pantryforblockheads.loot.ModLootModifiers;
 import net.blay09.mods.pantryforblockheads.menu.ModMenus;
@@ -60,7 +59,6 @@ public class PantryForBlockheads {
         registrars.blocks(registrar -> blocks = new ModBlocks(registrar));
         registrars.blockEntityTypes(ModBlockEntities::initialize);
         registrars.items(registrar -> items = new ModItems(registrar));
-        registrars.compostables(ModCompostables::initialize);
         registrars.menuTypes(ModMenus::initialize);
         registrars.recipeTypes(ModRecipes::initialize);
         registrars.creativeModeTabs((it) -> items().initializeCreativeModeTabs(it));

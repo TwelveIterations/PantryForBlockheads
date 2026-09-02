@@ -1,31 +1,24 @@
 package net.blay09.mods.pantryforblockheads.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ColorParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.ExtraCodecs;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.UntintedParticleLeavesBlock;
+import net.minecraft.world.level.block.sounds.AmbientLeavesBlockSoundPlayer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class PantryLeavesBlock extends UntintedParticleLeavesBlock {
-    public static final MapCodec<PantryLeavesBlock> CODEC = RecordCodecBuilder.mapCodec(
-            i -> i.group(ExtraCodecs.floatRange(0f, 1).fieldOf("leaf_particle_chance").forGetter(e -> e.leafParticleChance), propertiesCodec())
-                    .apply(i, PantryLeavesBlock::new)
-    );
-
     private static final IntegerProperty AGE = BlockStateProperties.AGE_3;
 
     public PantryLeavesBlock(float leafParticleChance, Properties properties) {
-        super(leafParticleChance, ColorParticleOption.create(ParticleTypes.TINTED_LEAVES, 0xff48b518), properties);
+        super(leafParticleChance, ColorParticleOption.create(ParticleTypes.TINTED_LEAVES, 0xff48b518), AmbientLeavesBlockSoundPlayer.noAmbientSound(), properties);
     }
 
     @Override

@@ -1,15 +1,16 @@
 package net.blay09.mods.pantryforblockheads.worldgen;
 
+import com.mojang.serialization.MapCodec;
 import net.blay09.mods.balm.core.BalmRegistrar;
 import net.minecraft.core.Holder;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 
 public class ModPlacementModifierTypes {
 
-    public final Holder<PlacementModifierType<?>> CONFIG_ENABLED;
+    public final Holder<MapCodec<? extends PlacementModifier>> CONFIG_ENABLED;
 
-    public ModPlacementModifierTypes(BalmRegistrar.Scoped<PlacementModifierType<?>> registrar) {
-        CONFIG_ENABLED = registrar.register("config_enabled", _ -> (PlacementModifierType<ConfigEnabledPlacementModifier>) () -> ConfigEnabledPlacementModifier.CODEC);
+    public ModPlacementModifierTypes(BalmRegistrar.Scoped<MapCodec<? extends PlacementModifier>> registrar) {
+        CONFIG_ENABLED = registrar.register("config_enabled", _ -> ConfigEnabledPlacementModifier.CODEC);
     }
 
 }

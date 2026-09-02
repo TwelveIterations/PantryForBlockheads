@@ -56,4 +56,8 @@ public class ModGameplayLootTableProvider extends SimpleFabricLootTableSubProvid
         }
         return builder;
     }
+
+    @Override
+    public void run() {
+    }
 }
