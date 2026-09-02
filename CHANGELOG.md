@@ -1,1 +1,1 @@
-- Added Pantry for Blockheads crops as valid shippables for the Farming for Blockheads Shipping Bin
+- Updated to Minecraft 26.3
