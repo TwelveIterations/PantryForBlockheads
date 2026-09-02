@@ -17,6 +17,7 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.BonemealSource;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.VegetationBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -31,10 +32,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class PantryBushBlock extends VegetationBlock implements BonemealableBlock {
-    public static final MapCodec<PantryBushBlock> CODEC = RecordCodecBuilder.mapCodec((it) -> it.group(
-                    BushType.CODEC.fieldOf("type").forGetter(PantryBushBlock::getBushType), propertiesCodec())
-            .apply(it, PantryBushBlock::new));
-
     private static final VoxelShape SHAPE_SAPLING = Block.column(10, 0, 8);
     private static final VoxelShape SHAPE_GROWING = Block.column(14, 0, 16);
     public static final int MAX_AGE = 3;
@@ -82,7 +79,7 @@ public class PantryBushBlock extends VegetationBlock implements BonemealableBloc
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos, Player player, BlockHitResult hitResult) {
         if (state.getValue(AGE) > 1) {
             if (level instanceof ServerLevel serverLevel) {
-                Block.dropFromBlockInteractLootTable(serverLevel, bushType.harvestLootTable(), state, level.getBlockEntity(pos), null, player, (effectiveLevel, itemStack) -> Block.popResource(effectiveLevel, pos, itemStack));
+                Block.dropFromBlockInteractLootTable(serverLevel, bushType.harvestLootTable(), pos, state, level.getBlockEntity(pos), null, player, (effectiveLevel, itemStack) -> Block.popResource(effectiveLevel, pos, itemStack));
                 serverLevel.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1f, 0.8f + serverLevel.getRandom().nextFloat() * 0.4f);
                 final var newState = state.setValue(AGE, 1);
                 serverLevel.setBlock(pos, newState, 2);
@@ -100,27 +97,22 @@ public class PantryBushBlock extends VegetationBlock implements BonemealableBloc
     }
 
     @Override
-    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+    public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state, BonemealSource source) {
         return state.getValue(AGE) < MAX_AGE && level.getBlockState(pos.above()).isAir() && level.isInsideBuildHeight(pos.above());
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state, BonemealSource source) {
         final int newAge = Math.min(MAX_AGE, state.getValue(AGE) + 1);
         level.setBlock(pos, state.setValue(AGE, newAge), Block.UPDATE_CLIENTS);
     }
 
     private BushType getBushType() {
         return bushType;
-    }
-
-    @Override
-    protected MapCodec<? extends VegetationBlock> codec() {
-        return CODEC;
     }
 }

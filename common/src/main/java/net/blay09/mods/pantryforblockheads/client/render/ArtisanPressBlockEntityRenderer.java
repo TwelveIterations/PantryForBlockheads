@@ -70,20 +70,20 @@ public class ArtisanPressBlockEntityRenderer implements BlockEntityRenderer<Arti
     public void submit(RenderState renderState, PoseStack poseStack, SubmitNodeCollector submitNodeCollector, CameraRenderState cameraRenderState) {
         poseStack.pushPose();
         poseStack.translate(0.5f, 0f, 0.5f);
-        poseStack.mulPose(Axis.YP.rotationDegrees(-renderState.facing.toYRot()));
+        poseStack.rotateDegrees(Axis.YP, -renderState.facing.toYRot());
         poseStack.translate(-0.5f, 0f, -0.5f);
 
         poseStack.pushPose();
         poseStack.translate(0f, -0.2f, 0f);
         poseStack.translate(0.5f, 0f, 0.5f);
-        poseStack.mulPose(Axis.YP.rotationDegrees(renderState.chainRotation));
+        poseStack.rotateDegrees(Axis.YP, renderState.chainRotation);
         poseStack.translate(-0.5f, 0f, -0.5f);
         submitBlockModel(renderState.upperChain, poseStack, submitNodeCollector, renderState.lightCoords, 0f, CHAIN_BASE_Y, 0f, 0.5f);
         poseStack.popPose();
 
         poseStack.pushPose();
         poseStack.translate(0.5f, 0f, 0.5f);
-        poseStack.mulPose(Axis.YP.rotationDegrees(90));
+        poseStack.rotateDegrees(Axis.YP, 90);
         poseStack.translate(-0.5f, 0f, -0.5f);
         poseStack.translate(0f, ANVIL_BASE_Y - renderState.anvilOffset, 0f);
         submitBlockModel(renderState.anvil, poseStack, submitNodeCollector, renderState.lightCoords, 0f, 0f, 0f, 0.4f);

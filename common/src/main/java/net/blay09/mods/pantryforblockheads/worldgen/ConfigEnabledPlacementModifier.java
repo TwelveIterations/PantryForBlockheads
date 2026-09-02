@@ -11,11 +11,10 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
-import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 
-import java.util.stream.Stream;
+import java.util.function.Consumer;
 
-public class ConfigEnabledPlacementModifier extends PlacementModifier {
+public class ConfigEnabledPlacementModifier implements PlacementModifier {
 
     public static final MapCodec<ConfigEnabledPlacementModifier> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
             Identifier.CODEC.fieldOf("schema").forGetter(ConfigEnabledPlacementModifier::schema),
@@ -34,12 +33,14 @@ public class ConfigEnabledPlacementModifier extends PlacementModifier {
     }
 
     @Override
-    public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
-        return isEnabled() ? Stream.of(pos) : Stream.empty();
+    public void modify(PlacementContext context, RandomSource random, BlockPos pos, Consumer<BlockPos> output) {
+        if (isEnabled()) {
+            output.accept(pos);
+        }
     }
 
     @Override
-    public PlacementModifierType<?> type() {
+    public MapCodec<? extends PlacementModifier> codec() {
         return PantryForBlockheads.placementModifierTypes().CONFIG_ENABLED.value();
     }
 

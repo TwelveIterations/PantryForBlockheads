@@ -8,6 +8,7 @@ import net.blay09.mods.balm.world.level.block.DeferredBlock;
 import net.blay09.mods.pantryforblockheads.PantryForBlockheads;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders;
 
 import static net.blay09.mods.pantryforblockheads.PantryForBlockheads.id;
 
@@ -32,7 +33,8 @@ public class ModItems {
         knife = items.register("knife", PantryUtensilItem::new).asDeferredItem();
         magicSprinkles = items.register("magic_sprinkles", Item::new).asDeferredItem();
 
-        crops = items.registerDiscriminated(CropType.values(), CropType::getSerializedName, (_, properties) -> new Item(properties), CropType::applyProperties).asDiscriminatedItems();
+        crops = items.registerDiscriminated(CropType.values(), CropType::getSerializedName, (_, properties) -> new Item(properties),
+                (type, properties) -> type.applyProperties(properties).compostable(ContextIntProviders.COMPOSTABLE_MEDIUM)).asDiscriminatedItems();
         fruits = items.registerDiscriminated(TreeType.values(), Enum::toString, (_, properties) -> new Item(properties), (type, it) -> it.food(type.foodProperties())).asDiscriminatedItems();
         meals = items.registerDiscriminated(MealType.values(), MealType::getSerializedName, (_, properties) -> new Item(properties), MealType::applyProperties).asDiscriminatedItems();
     }

@@ -1,7 +1,5 @@
 package net.blay09.mods.pantryforblockheads.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.blay09.mods.pantryforblockheads.item.CropType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -12,10 +10,6 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 
 public class PantryCropBlock extends CropBlock {
-    public static final MapCodec<PantryCropBlock> CODEC = RecordCodecBuilder.mapCodec((it) -> it.group(
-                    CropType.CODEC.fieldOf("type").forGetter(PantryCropBlock::getCropType), propertiesCodec())
-            .apply(it, PantryCropBlock::new));
-
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
     private final CropType cropType;
 
@@ -26,11 +20,6 @@ public class PantryCropBlock extends CropBlock {
 
     public CropType getCropType() {
         return cropType;
-    }
-
-    @Override
-    public MapCodec<? extends CropBlock> codec() {
-        return CODEC;
     }
 
     @Override

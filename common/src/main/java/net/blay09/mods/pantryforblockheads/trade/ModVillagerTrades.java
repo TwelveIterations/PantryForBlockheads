@@ -15,7 +15,6 @@ import net.minecraft.world.level.ItemLike;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static net.blay09.mods.pantryforblockheads.PantryForBlockheads.id;
@@ -92,30 +91,26 @@ public final class ModVillagerTrades {
     private static void register(BootstrapContext<VillagerTrade> context, ResourceKey<VillagerTrade> key, ItemLike item, int emeraldPrice, int maxUses) {
         context.register(
                 key,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(Items.EMERALD, emeraldPrice),
                         new ItemStackTemplate(item.asItem()),
                         maxUses,
                         1,
-                        0.05f,
-                        Optional.empty(),
-                        List.of()
-                )
+                        0.05f
+                ).build()
         );
     }
 
     private static void registerBuying(BootstrapContext<VillagerTrade> context, ResourceKey<VillagerTrade> key, ItemLike item, int itemCount, int maxUses, int xp) {
         context.register(
                 key,
-                new VillagerTrade(
+                VillagerTrade.builder(
                         new TradeCost(item, itemCount),
                         new ItemStackTemplate(Items.EMERALD),
                         maxUses,
                         xp,
-                        0.05f,
-                        Optional.empty(),
-                        List.of()
-                )
+                        0.05f
+                ).build()
         );
     }
 }
