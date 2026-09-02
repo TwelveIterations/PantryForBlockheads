@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:chocolate_cupcake"
+        "recipes": "pantryforblockheads:chocolate_cupcake"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

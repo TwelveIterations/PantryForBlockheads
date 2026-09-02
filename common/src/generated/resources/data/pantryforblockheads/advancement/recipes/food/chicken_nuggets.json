@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:chicken_nuggets"
+        "recipes": "pantryforblockheads:chicken_nuggets"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

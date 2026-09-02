@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:berry_muffin"
+        "recipes": "pantryforblockheads:berry_muffin"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

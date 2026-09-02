@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:pot"
+        "recipes": "pantryforblockheads:pot"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

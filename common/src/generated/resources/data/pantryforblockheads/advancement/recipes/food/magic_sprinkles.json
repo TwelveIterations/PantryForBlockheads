@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:magic_sprinkles"
+        "recipes": "pantryforblockheads:magic_sprinkles"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

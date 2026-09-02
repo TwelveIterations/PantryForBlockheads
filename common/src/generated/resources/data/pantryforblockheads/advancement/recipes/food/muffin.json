@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:muffin"
+        "recipes": "pantryforblockheads:muffin"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

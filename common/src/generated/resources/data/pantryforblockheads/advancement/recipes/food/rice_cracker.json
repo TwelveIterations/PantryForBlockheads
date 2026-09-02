@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:rice_cracker"
+        "recipes": "pantryforblockheads:rice_cracker"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

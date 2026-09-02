@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:breadstick"
+        "recipes": "pantryforblockheads:breadstick"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

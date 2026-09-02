@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:burger"
+        "recipes": "pantryforblockheads:burger"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

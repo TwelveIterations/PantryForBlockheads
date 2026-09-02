@@ -2,12 +2,10 @@
   "type": "minecraft:empty",
   "pools": [
     {
-      "conditions": [
-        {
-          "chance": 0.125,
-          "condition": "minecraft:random_chance"
-        }
-      ],
+      "condition": {
+        "type": "minecraft:random_chance",
+        "chance": 0.125
+      },
       "entries": [
         {
           "type": "minecraft:item",
@@ -66,7 +64,7 @@
           "name": "pantryforblockheads:soybean_seeds"
         }
       ],
-      "rolls": 1.0
+      "rolls": 1
     }
   ]
 }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:fortune_cookie"
+        "recipes": "pantryforblockheads:fortune_cookie"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

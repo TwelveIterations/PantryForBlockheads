@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:sprinkle_pink_doughnut"
+        "recipes": "pantryforblockheads:sprinkle_pink_doughnut"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
