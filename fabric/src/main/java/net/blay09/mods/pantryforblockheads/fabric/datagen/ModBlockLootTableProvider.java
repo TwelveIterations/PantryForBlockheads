@@ -102,7 +102,7 @@ public class ModBlockLootTableProvider extends FabricBlockLootSubProvider {
     }
 
     private LootItemCondition.Builder hasAnyShearsToolOrSilkTouch() {
-        return hasAnyShearsTool().or(() -> hasSilkTouch().value());
+        return hasAnyShearsTool(); // TODO .or(() -> hasSilkTouch().value());
     }
 
     private LootItemCondition.Builder doesNotHaveAnyShearsToolOrSilkTouch() {
