@@ -16,6 +16,16 @@ dependencies {
 apply from: rootProject.file('repositories.gradle')
 apply from: 'dependencies.gradle'
 
+fabricApi {
+    configureTests {
+        createSourceSet = true
+        modId = "${mod_id}-test"
+        enableGameTests = true
+        enableClientGameTests = false
+        eula = true
+    }
+}
+
 loom {
     def aw = project(":common").file("src/main/resources/${mod_id}.classtweaker")
     if (aw.exists()) {
@@ -48,6 +58,7 @@ loom {
     }
 }
 
+
 tasks.register('curseforge', TaskPublishCurseForge) {
     dependsOn('build')
     description = 'Publishes the Fabric build to CurseForge.'
@@ -76,10 +87,7 @@ modrinth {
     versionType = "release"
     versionNumber = project.version + "+fabric-" + libs.minecraft.get().version
     uploadFile = jar
-    def changelogFile = rootProject.file("CHANGELOG.md")
-    if (changelogFile.exists()) {
-        changelog = changelogFile.text
-    }
+    changelog = rootProject.file("CHANGELOG.md").text
     gameVersions = [libs.minecraft.get().version]
     loaders = ['fabric']
     dependencies {

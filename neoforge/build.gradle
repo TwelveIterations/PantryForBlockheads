@@ -72,10 +72,7 @@ modrinth {
     versionType = "release"
     versionNumber = project.version + "+neoforge-" + libs.minecraft.get().version
     uploadFile = jar
-    def changelogFile = rootProject.file("CHANGELOG.md")
-    if (changelogFile.exists()) {
-        changelog = changelogFile.text
-    }
+    changelog = rootProject.file("CHANGELOG.md").text
     gameVersions = [libs.minecraft.get().version]
     loaders = ['neoforge']
     dependencies {

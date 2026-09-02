@@ -9,11 +9,13 @@ plugins {
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(java_version)
 
+
 minecraft {
     mappings channel: 'official', version: libs.minecraft.get().version
     runs {
         configureEach {
             workingDir.convention layout.projectDirectory.dir('run')
+            // Mixin requires either specifying the config via command line, or in the Manifest
             args "--mixin.config=${mod_id}.mixins.json"
             args "--mixin.config=${mod_id}.forge.mixins.json"
         }
@@ -51,6 +53,7 @@ tasks.named('jar', Jar) {
 
 sourceSets.main.resources.srcDir 'src/generated/resources'
 
+
 tasks.register('curseforge', TaskPublishCurseForge) {
     dependsOn('build')
     description = 'Publishes the Forge build to CurseForge.'
@@ -78,10 +81,7 @@ modrinth {
     versionType = "release"
     versionNumber = project.version + "+forge-" + libs.minecraft.get().version
     uploadFile = jar
-    def changelogFile = rootProject.file("CHANGELOG.md")
-    if (changelogFile.exists()) {
-        changelog = changelogFile.text
-    }
+    changelog = rootProject.file("CHANGELOG.md").text
     gameVersions = [libs.minecraft.get().version]
     loaders = ['forge']
     dependencies {

@@ -15,6 +15,7 @@ neoForge {
 
 dependencies {
     compileOnly libs.mixin
+    compileOnly libs.mixinExtras
 }
 
 apply from: rootProject.file('repositories.gradle')
@@ -48,3 +49,4 @@ artifacts {
     commonResources sourceSets.main.resources.sourceDirectories.singleFile
     commonGeneratedResources sourceSets.generated.resources.sourceDirectories.singleFile
 }
+
