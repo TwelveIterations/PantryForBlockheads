@@ -1,26 +1,6 @@
 {
   "type": "minecraft:tree",
-  "config": {
-    "below_trunk_provider": {
-      "type": "minecraft:rule_based_state_provider",
-      "rules": [
-        {
-          "if_true": {
-            "type": "minecraft:not",
-            "predicate": {
-              "type": "minecraft:matching_block_tag",
-              "tag": "minecraft:cannot_replace_below_tree_trunk"
-            }
-          },
-          "then": {
-            "type": "minecraft:simple_state_provider",
-            "state": {
-              "Name": "minecraft:dirt"
-            }
-          }
-        }
-      ]
-    },
+    "below_trunk_provider": "minecraft:soil_beneath_tree",
     "decorators": [],
     "foliage_placer": {
       "type": "minecraft:blob_foliage_placer",
@@ -29,12 +9,12 @@
       "radius": 2
     },
     "foliage_provider": {
-      "type": "minecraft:weighted_state_provider",
+      "type": "minecraft:weighted",
       "entries": [
         {
           "data": {
-            "Name": "pantryforblockheads:lemon_leaves",
-            "Properties": {
+            "id": "pantryforblockheads:peach_leaves",
+            "properties": {
               "distance": "7",
               "persistent": "false",
               "waterlogged": "false",
@@ -45,8 +25,8 @@
         },
         {
           "data": {
-            "Name": "pantryforblockheads:lemon_leaves",
-            "Properties": {
+            "id": "pantryforblockheads:peach_leaves",
+            "properties": {
               "distance": "7",
               "persistent": "false",
               "waterlogged": "false",
@@ -71,13 +51,9 @@
       "height_rand_b": 0
     },
     "trunk_provider": {
-      "type": "minecraft:simple_state_provider",
-      "state": {
-        "Name": "minecraft:oak_log",
-        "Properties": {
-          "axis": "y"
-        }
+      "id": "minecraft:oak_log",
+      "properties": {
+        "axis": "y"
       }
     }
-  }
 }
