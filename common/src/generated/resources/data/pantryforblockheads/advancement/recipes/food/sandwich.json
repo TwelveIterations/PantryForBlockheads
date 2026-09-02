@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:sandwich"
+        "recipes": "pantryforblockheads:sandwich"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

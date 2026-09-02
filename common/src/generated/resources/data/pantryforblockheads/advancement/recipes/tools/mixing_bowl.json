@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:mixing_bowl"
+        "recipes": "pantryforblockheads:mixing_bowl"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:artisan_press"
+        "recipes": "pantryforblockheads:artisan_press"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:fish_fillet"
+        "recipes": "pantryforblockheads:fish_fillet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

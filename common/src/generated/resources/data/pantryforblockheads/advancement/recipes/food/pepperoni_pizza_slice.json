@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:pepperoni_pizza_slice"
+        "recipes": "pantryforblockheads:pepperoni_pizza_slice"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

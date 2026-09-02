@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:fried_egg"
+        "recipes": "pantryforblockheads:fried_egg"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

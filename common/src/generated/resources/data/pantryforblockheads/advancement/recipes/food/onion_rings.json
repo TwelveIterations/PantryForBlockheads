@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:onion_rings"
+        "recipes": "pantryforblockheads:onion_rings"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

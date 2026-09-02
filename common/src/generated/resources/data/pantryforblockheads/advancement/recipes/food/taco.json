@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:taco"
+        "recipes": "pantryforblockheads:taco"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

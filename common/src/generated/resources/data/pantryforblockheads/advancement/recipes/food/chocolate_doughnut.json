@@ -3,7 +3,7 @@
   "criteria": {
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:chocolate_doughnut"
+        "recipes": "pantryforblockheads:chocolate_doughnut"
       },
       "trigger": "minecraft:recipe_unlocked"
     },

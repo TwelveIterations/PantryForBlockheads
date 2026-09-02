@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:burrito"
+        "recipes": "pantryforblockheads:burrito"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:fish_sticks"
+        "recipes": "pantryforblockheads:fish_sticks"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

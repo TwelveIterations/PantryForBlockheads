@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:bacon"
+        "recipes": "pantryforblockheads:bacon"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

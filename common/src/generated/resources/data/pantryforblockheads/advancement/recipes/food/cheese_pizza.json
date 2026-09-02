@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:cheese_pizza"
+        "recipes": "pantryforblockheads:cheese_pizza"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

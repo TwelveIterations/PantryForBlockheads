@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:baking_sheet"
+        "recipes": "pantryforblockheads:baking_sheet"
       },
       "trigger": "minecraft:recipe_unlocked"
     }

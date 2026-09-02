@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "pantryforblockheads:chocolate_icecream"
+        "recipes": "pantryforblockheads:chocolate_icecream"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
