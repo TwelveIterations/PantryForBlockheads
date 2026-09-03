@@ -10,7 +10,7 @@ public class ModPlacementModifierTypes {
     public final Holder<MapCodec<? extends PlacementModifier>> CONFIG_ENABLED;
 
     public ModPlacementModifierTypes(BalmRegistrar.Scoped<MapCodec<? extends PlacementModifier>> registrar) {
-        CONFIG_ENABLED = registrar.register("config_enabled", _ -> ConfigEnabledPlacementModifier.CODEC);
+        CONFIG_ENABLED = registrar.register("config_enabled", _ -> ConfigEnabledPlacementModifier.CODEC).asHolder();
     }
 
 }

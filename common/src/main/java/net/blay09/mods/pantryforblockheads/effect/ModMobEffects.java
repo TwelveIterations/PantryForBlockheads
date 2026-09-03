@@ -13,6 +13,6 @@ public class ModMobEffects {
 
     public ModMobEffects(BalmRegistrar.Scoped<MobEffect> registrar) {
         wellFed = registrar.register("well_fed", _ -> new WellFedMobEffect(MobEffectCategory.BENEFICIAL, 2445989)
-                .addAttributeModifier(Attributes.MAX_ABSORPTION, Identifier.fromNamespaceAndPath("pantryforblockheads", "effect.well_fed"), 1.0, AttributeModifier.Operation.ADD_VALUE));
+                .addAttributeModifier(Attributes.MAX_ABSORPTION, Identifier.fromNamespaceAndPath("pantryforblockheads", "effect.well_fed"), 1.0, AttributeModifier.Operation.ADD_VALUE)).asHolder();
     }
 }
