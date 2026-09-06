@@ -56,7 +56,7 @@ public final class ModLootModifiers {
                     return;
                 }
 
-                final BlockState blockState = context.getOptionalParameter(LootContextParams.BLOCK_STATE);
+                final BlockState blockState = context.getOptional(LootContextParams.BLOCK_STATE);
                 if (blockState == null || !blockState.is(ModBlockTags.DROPS_SEEDS)) {
                     return;
                 }
