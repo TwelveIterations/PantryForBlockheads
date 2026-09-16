@@ -14,56 +14,61 @@ import net.minecraft.resources.Identifier;
 
 import java.util.ArrayList;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Stream;
 
 import static net.blay09.mods.pantryforblockheads.PantryForBlockheads.id;
 
 public class ModCompatRecipeProvider implements DataProvider {
     private final PackOutput.PathProvider recipePathProvider;
+    private final PackOutput.PathProvider dropRushPathProvider;
 
     public ModCompatRecipeProvider(FabricPackOutput output) {
         recipePathProvider = output.createPathProvider(PackOutput.Target.DATA_PACK, "recipe");
+        dropRushPathProvider = output.createPathProvider(PackOutput.Target.DATA_PACK, "littlejoys/drop_rush");
     }
 
     @Override
     public CompletableFuture<?> run(CachedOutput output) {
-        final var entries = new ArrayList<Entry>();
+        final var recipeEntries = new ArrayList<Entry>();
+        final var dropRushEntries = new ArrayList<Entry>();
 
         for (final var cropType : CropType.values()) {
-            entries.add(new Entry(
+            recipeEntries.add(new Entry(
                     id("market/" + cropType + "_seeds"),
                     marketRecipe("farmingforblockheads:seeds", "pantryforblockheads:" + cropType + "_seeds", "selling.seeds.pantryforblockheads." + cropType + "_seeds")));
-            entries.add(new Entry(
+            recipeEntries.add(new Entry(
                     id("shipping_bin/pantryforblockheads/" + cropType),
                     shippingBinRecipe("pantryforblockheads:" + cropType, 5)));
-            entries.add(new Entry(
-                    id("drop_rush/" + cropType.plural()),
-                    dropRushRecipe("pantryforblockheads:" + cropType.plural(), cropType.maxAge(), "pantryforblockheads:blocks/" + cropType.plural())));
+            dropRushEntries.add(new Entry(
+                    id(cropType.plural()),
+                    dropRushEvent("pantryforblockheads:" + cropType.plural(), cropType.maxAge(), "pantryforblockheads:blocks/" + cropType.plural())));
         }
 
         for (final var treeType : TreeType.values()) {
             final var name = treeType.getSerializedName();
-            entries.add(new Entry(
+            recipeEntries.add(new Entry(
                     id( "market/" + name + "_sapling"),
                     marketRecipe("farmingforblockheads:saplings", "pantryforblockheads:" + name + "_sapling", "selling.saplings.pantryforblockheads." + name + "_sapling")));
-            entries.add(new Entry(
+            recipeEntries.add(new Entry(
                     id("shipping_bin/pantryforblockheads/" + name),
                     shippingBinRecipe("pantryforblockheads:" + name, 5)));
         }
 
         for (final var bushType : BushType.values()) {
-            entries.add(new Entry(
+            recipeEntries.add(new Entry(
                     id("shipping_bin/pantryforblockheads/" + bushType.getSerializedName()),
                     shippingBinRecipe("pantryforblockheads:" + bushType.getSerializedName(), 1)));
         }
 
-        return CompletableFuture.allOf(entries.stream()
-                .map(it -> DataProvider.saveStable(output, it.json(), recipePathProvider.json(it.id())))
+        return CompletableFuture.allOf(Stream.concat(
+                                recipeEntries.stream().map(it -> DataProvider.saveStable(output, it.json(), recipePathProvider.json(it.id()))),
+                                dropRushEntries.stream().map(it -> DataProvider.saveStable(output, it.json(), dropRushPathProvider.json(it.id()))))
                 .toArray(CompletableFuture[]::new));
     }
 
     @Override
     public String getName() {
-        return PantryForBlockheads.MOD_ID + " Compat Recipes";
+        return PantryForBlockheads.MOD_ID + " Compat Data";
     }
 
     private static JsonObject marketRecipe(String category, String item, String defaults) {
@@ -89,20 +94,27 @@ public class ModCompatRecipeProvider implements DataProvider {
         return json;
     }
 
-    private static JsonObject dropRushRecipe(String stateName, int age, String lootTable) {
+    private static JsonObject dropRushEvent(String blockName, int age, String lootTable) {
         final var json = new JsonObject();
-        json.addProperty("type", "littlejoys:drop_rush");
         addModLoadedConditions(json, "littlejoys");
 
-        final var eventCondition = new JsonObject();
-        eventCondition.addProperty("type", "is_state");
-        final var state = new JsonObject();
-        state.addProperty("Name", stateName);
-        final var properties = new JsonObject();
-        properties.addProperty("age", Integer.toString(age));
-        state.add("Properties", properties);
-        eventCondition.add("state", state);
-        json.add("eventCondition", eventCondition);
+        final var condition = new JsonObject();
+        condition.addProperty("type", "shogi:and");
+        final var conditions = new JsonArray();
+
+        final var blockCondition = new JsonObject();
+        blockCondition.addProperty("type", "shogi:is_block");
+        blockCondition.addProperty("block", blockName);
+        conditions.add(blockCondition);
+
+        final var ageCondition = new JsonObject();
+        ageCondition.addProperty("type", "shogi:is_block_state_property");
+        ageCondition.addProperty("property", "age");
+        ageCondition.addProperty("value", Integer.toString(age));
+        conditions.add(ageCondition);
+
+        condition.add("conditions", conditions);
+        json.add("condition", condition);
 
         json.addProperty("lootTable", lootTable);
         return json;

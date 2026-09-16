@@ -7,15 +7,19 @@
       ]
     }
   ],
-  "type": "littlejoys:drop_rush",
-  "eventCondition": {
-    "type": "is_state",
-    "state": {
-      "Name": "pantryforblockheads:chilli_peppers",
-      "Properties": {
-        "age": "3"
+  "condition": {
+    "type": "shogi:and",
+    "conditions": [
+      {
+        "type": "shogi:is_block",
+        "block": "pantryforblockheads:chilli_peppers"
+      },
+      {
+        "type": "shogi:is_block_state_property",
+        "property": "age",
+        "value": "3"
       }
-    }
+    ]
   },
   "lootTable": "pantryforblockheads:blocks/chilli_peppers",
   "neoforge:conditions": [
